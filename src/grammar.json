@@ -1,26 +1,32 @@
 {
   "$schema": "https://tree-sitter.github.io/tree-sitter/assets/schemas/grammar.schema.json",
   "name": "forthish",
+  "word": "word",
   "rules": {
     "source_file": {
-      "type": "REPEAT",
-      "content": {
-        "type": "SEQ",
-        "members": [
-          {
-            "type": "PATTERN",
-            "value": "\\s*"
-          },
-          {
-            "type": "SYMBOL",
-            "name": "_expression"
-          },
-          {
-            "type": "PATTERN",
-            "value": "\\s*"
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "PATTERN",
+          "value": "\\s*"
+        },
+        {
+          "type": "REPEAT",
+          "content": {
+            "type": "SEQ",
+            "members": [
+              {
+                "type": "SYMBOL",
+                "name": "_expression"
+              },
+              {
+                "type": "PATTERN",
+                "value": "\\s*"
+              }
+            ]
           }
-        ]
-      }
+        }
+      ]
     },
     "_expression": {
       "type": "CHOICE",
@@ -77,7 +83,7 @@
     },
     "comment": {
       "type": "PATTERN",
-      "value": "\\([^)]*"
+      "value": "\\(.*\\)"
     },
     "quote": {
       "type": "SEQ",
@@ -87,14 +93,14 @@
           "value": "["
         },
         {
+          "type": "PATTERN",
+          "value": "\\s*"
+        },
+        {
           "type": "REPEAT",
           "content": {
             "type": "SEQ",
             "members": [
-              {
-                "type": "PATTERN",
-                "value": "\\s*"
-              },
               {
                 "type": "SYMBOL",
                 "name": "_expression"
@@ -142,7 +148,7 @@
               },
               {
                 "type": "PATTERN",
-                "value": "\\s+"
+                "value": "\\s*"
               }
             ]
           }
@@ -187,7 +193,7 @@
               },
               {
                 "type": "PATTERN",
-                "value": "\\s+"
+                "value": "\\s*"
               }
             ]
           }
@@ -229,7 +235,7 @@
     },
     "word": {
       "type": "PATTERN",
-      "value": "[^\\[\\]():;\\s]+"
+      "value": "[^:;\\s]+"
     }
   },
   "extras": [],
