@@ -1,0 +1,36 @@
+{
+  "grammars": [
+    {
+      "name": "forthish",
+      "camelcase": "Forthish",
+      "scope": "source.forthish",
+      "file-types": [
+        "fthish"
+      ],
+      "highlights": "queries/highlights.scm",
+      "injection-regex": "^forthish$"
+    }
+  ],
+  "metadata": {
+    "version": "0.1.0",
+    "license": "MIT",
+    "description": "Tree Sitter for a Forthish language",
+    "authors": [
+      {
+        "name": "Vasyl Bodnar",
+        "email": "vasyl_bodnar@outlook.com"
+      }
+    ],
+    "links": {
+      "repository": "https://github.com/tree-sitter/tree-sitter-forthish"
+    }
+  },
+  "bindings": {
+    "c": true,
+    "go": true,
+    "node": true,
+    "python": true,
+    "rust": true,
+    "swift": true
+  }
+}
