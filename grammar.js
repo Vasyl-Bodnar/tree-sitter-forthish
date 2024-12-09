@@ -10,19 +10,17 @@
 module.exports = grammar({
   name: "forthish",
 
-  conflicts: $ => [[$.modcall, $.module, $._expression], [$.modcall]],
-
   word: $ => $.word,
 
   rules: {
     source_file: $ => repeat($._expression),
     quote: $ => seq("[", repeat($._expression), "]"),
     modcall: $ => seq(
-      repeat1(seq($.word, ":")), 
+      repeat1(seq($.word, token.immediate(":"))), 
       field("fn", $.word)
     ),
     module: $ => seq(
-      field("name", $.word), ":", /\s+/, 
+      field("name", $.word), token.immediate(":"), /\s+/, 
       repeat($._expression), ";"
     ),
     function: $ => seq(

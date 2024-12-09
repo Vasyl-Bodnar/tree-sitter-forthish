@@ -43,8 +43,11 @@
                 "name": "word"
               },
               {
-                "type": "STRING",
-                "value": ":"
+                "type": "IMMEDIATE_TOKEN",
+                "content": {
+                  "type": "STRING",
+                  "value": ":"
+                }
               }
             ]
           }
@@ -71,8 +74,11 @@
           }
         },
         {
-          "type": "STRING",
-          "value": ":"
+          "type": "IMMEDIATE_TOKEN",
+          "content": {
+            "type": "STRING",
+            "value": ":"
+          }
         },
         {
           "type": "PATTERN",
@@ -191,16 +197,7 @@
       "value": "\\s"
     }
   ],
-  "conflicts": [
-    [
-      "modcall",
-      "module",
-      "_expression"
-    ],
-    [
-      "modcall"
-    ]
-  ],
+  "conflicts": [],
   "precedences": [],
   "externals": [],
   "inline": [],
