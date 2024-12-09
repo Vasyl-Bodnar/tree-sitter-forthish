@@ -10,21 +10,33 @@
 module.exports = grammar({
   name: "forthish",
 
-  extras: $ => [],
+  conflicts: $ => [[$.modcall, $.module, $._expression], [$.modcall]],
 
   word: $ => $.word,
 
   rules: {
-    source_file: $ => seq(/\s*/, repeat(seq($._expression, /\s*/))),
-    _expression: $ => choice($.number, $.constant, $.string, $.comment, $.quote, $.module, $.function, $.modcall, $.word),
+    source_file: $ => repeat($._expression),
+    quote: $ => seq("[", repeat($._expression), "]"),
+    modcall: $ => seq(
+      repeat1(seq($.word, ":")), 
+      field("fn", $.word)
+    ),
+    module: $ => seq(
+      field("name", $.word), ":", /\s+/, 
+      repeat($._expression), ";"
+    ),
+    function: $ => seq(
+      ":", field("name", $.word), /\s+/, 
+      repeat($._expression), ";"
+    ),
     number: $ => /[-+]?\d+/,
     constant: $ => /true|false/,
     string: $ => /"[^"]*"/,
-    comment: $ => /\(.*\)/,
-    quote: $ => seq("[", /\s*/, repeat(seq($._expression, /\s*/)), "]"),
-    module: $ => seq(field("name", $.word), ":", /\s+/, repeat(seq($._expression, /\s*/)), ";"),
-    function: $ => seq(":", /\s*/, field("name", $.word), /\s+/, repeat(seq($._expression, /\s*/)), ";"),
-    modcall: $ => seq(repeat1(seq($.word, ":")), field("fn", $.word)),
-    word: $ => /[^:;\s]+/
+    comment: $ => /\([^\)]*\)/,
+    word: $ => /[^\(\)\[\]":;\s]+/,
+    _expression: $ => choice(
+      $.number, $.constant, $.string, $.comment, 
+      $.quote, $.module, $.function, $.modcall, $.word
+    ),
   }
 });
